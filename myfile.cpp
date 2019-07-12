@@ -277,3 +277,100 @@ if(ch==&#39;0&#39;)
 break;
 }
 }
+//=============================================================
+// FUNCTION TO DISPLAY HELP ABOUT PROJECT
+//=============================================================
+void control::help(void)
+{
+clrscr();
+shape s;
+s.box(2,1,79,25,218);
+s.box(25,2,54,4,219);
+textcolor(LIGHTBLUE+BLINK);
+gotoxy(27,3);
+cprintf(&quot;WELCOME TO THE PROJECT BANKING &quot;);
+textcolor(LIGHTBLUE);
+delay(10);
+gotoxy(10,6);
+cout&lt;&lt;&quot;IN THIS PROJECT YOU CAN KEEP RECORD OF DAILY BANKING &quot;;
+delay(10);
+gotoxy(10,7);
+cout&lt;&lt;&quot; TRANSACTIONS. &quot;;
+delay(10);
+gotoxy(10,9);
+cout&lt;&lt;&quot; THIS PROGRAMME IS CAPABLE OF HOLDING ANY NO. OF ACCOUNTS &quot;;
+delay(10);
+gotoxy(10,11);
+cout&lt;&lt;&quot; # IN FIRST OPTION YOU CAN SEE ACCOUNT OF A PARTICULAR &quot;;
+delay(10);
+gotoxy(10,12);
+cout&lt;&lt;&quot; PERSON BY GIVING SIMPLY ACCOUNT NO. OF THAT PERSON&quot;;
+delay(10);
+gotoxy(10,14);
+cout&lt;&lt;&quot;# IN SECOND OPTION YOUN CAN SEE THE LIST OF ALL ACCOUNTS. &quot;;
+delay(10);
+gotoxy(10,16);
+cout&lt;&lt;&quot;# THROUGH THIRD OPTION YOU CAN DO BANKING TRANSACTIONS &quot;;
+delay(10);
+gotoxy(10,17);
+cout&lt;&lt;&quot; ( DEPOSIT / WITHDRAW )&quot;;
+delay(10);
+gotoxy(10,19);
+cout&lt;&lt;&quot;# IN FOURTH OPTION YOU CAN OPEN NEW ACCOUNT. &quot;;
+delay(10);
+gotoxy(10,20);
+cout&lt;&lt;&quot; NOTE: OPENING AMOUNT SHOULD NOT LESS THAN Rs.500/-. &quot;;
+delay(10);
+gotoxy(10,22);
+cout&lt;&lt;&quot;# IN THE FIFTH OPTION YOU CAN MODIFY OR DELETE ANY ACCOUNT. &quot;;
+
+delay(10);
+gotoxy(10,24);
+cout&lt;&lt;&quot;# AND LAST OPTION IS QUIT (EXIT TO DOS).&quot;;
+delay(10);
+textcolor(LIGHTBLUE+BLINK); textbackground(BLACK);
+gotoxy(26,25);
+cprintf(&quot; PRESS ANY KEY TO CONTINUE &quot;);
+textcolor(LIGHTBLUE);textbackground(BLACK);
+gotoxy(25,2);
+getch();
+for(int i=25;i&gt;=1;i--)
+{
+delay(20);
+gotoxy(1,i);clreol();
+}
+}
+//========================================================
+//THIS FUNCTION RETURN LAST ACCOUNT NO. IN THE FILE
+//INITIAL.DAT
+//========================================================
+int initial::last_accno(void)
+{
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;, ios::in);
+file.seekg(0,ios::beg);
+int count=0;
+while(file.read((char*)this, sizeof(initial)))
+count=accno;
+file.close();
+return count;
+}
+//==========================================================
+//THIS FUNCTION RETURN RECORD NO. OF THE GIVEN ACCOUNT NO.
+//IN THE FILE INITIAL.DAT
+//==========================================================
+int initial::recordno(int t_accno)
+{
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::in);
+file.seekg(0,ios::beg);
+int count=0;
+while (file.read((char*)this, sizeof(initial)))
+{
+count++;
+if(t_accno==accno)
+break;
+}
+file.close();
+return count;
+}
