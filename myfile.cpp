@@ -102,4 +102,48 @@ gotoxy(column,row1);
 cout&lt;&lt;c;
 
 }
+//============================================================
+// FUNCTION TO DRAW BOX LINE
+//============================================================
+void shape::box(int column1,int row1,int column2,int row2,char c)
+{
+char ch=218;
+char c1,c2,c3,c4;
+char l1=196,l2=179;
+if(c==ch)
+{
+c1=218;
+c2=191;
+c3=192;
+c4=217;
+l1=196;
+l2=179;
 }
+else
+{
+c1=c;
+c2=c;
+c3=c;
+c4=c;
+l1=c;
+l2=c;
+}
+gotoxy(column1,row1);
+cout&lt;&lt;c1;
+gotoxy(column2,row1);
+cout&lt;&lt;c2;
+gotoxy(column1,row2);
+cout&lt;&lt;c3;
+gotoxy(column2,row2);
+cout&lt;&lt;c4;
+column1++;
+column2--;
+line_hor(column1,column2,row1,l1);
+line_hor(column1,column2,row2,l1);
+column1--;
+column2++;
+row1++;
+row2--;
+line_ver(row1,row2,column1,l2);
+line_ver(row1,row2,column2,l2);
+}}
