@@ -422,3 +422,141 @@ file.seekp(location);
 file.write((char *) this, sizeof(initial));
 file.close();
 }
+//============================================================
+//THIS FUNCTION GIVE THE DATA TO MODIFY THE RECORD IN THE
+//FILE INITIAL.DAT
+//============================================================
+void initial::modify(void)
+{
+clrscr();
+char t_acc[10];
+int t, t_accno;
+gotoxy(71,1);
+cout&lt;&lt;&quot;&amp;lt;0&gt;=EXIT&quot;;
+gotoxy(5,5);
+cout&lt; &lt;&quot;ENTER THE ACCOUNT NO.&quot;;
+gets(t_acc);
+t=atoi(t_acc);
+t_accno=t;
+if(t_accno==0)
+return;
+clrscr();
+if(!found_account(t_accno))
+{
+gotoxy(5,5);
+cout&lt;&lt;&quot;\7ACCOUNT NOT FOUND&quot;;
+getch();
+return;
+}
+shape s;
+s.box(2,2,79,24,218);
+s.line_hor(3,78,4,196);
+s.line_hor(3,78,22,196);
+gotoxy(71,1);
+cout&lt;&lt;&quot;&amp;lt;0&gt;=EXIT&quot;;
+textbackground(BLACK);
+gotoxy(3,3);
+for(int i=1;i&lt; =76;i++) cprintf(&quot; &quot;);
+textbackground(BLACK);
+textcolor(LIGHTBLUE+BLINK); textbackground(BLACK);
+gotoxy(30,3);
+cprintf(&quot;MODIFY ACCOUNT SCREEN&quot;);
+textcolor(LIGHTBLUE); textbackground(BLACK);
+int d1,m1,y1;
+struct date d;
+getdate(&amp;d);
+d1=d.da_day;
+m1=d.da_mon;
+y1=d.da_year;
+gotoxy(62,5);
+cout&lt;&lt;&quot;DATE:&quot;&lt;&lt;d1&lt;&lt;&quot;/&quot;&lt;&lt;m1&lt;&lt;&quot;/&quot;&lt;&lt;y1;
+char ch;
+display(t_accno);
+account a;
+
+do
+{
+a.clear(5,13);
+gotoxy(5,13);
+cout&lt;&lt;&quot;MODIFY THIS ACCOUNT(Y/N):&quot;;
+ch=getche();
+if(ch==&#39;0&#39;)
+return;
+ch=toupper(ch);
+}while(ch!=&#39;N&#39; &amp;&amp; ch!=&#39;Y&#39;);
+if(ch==&#39;N&#39;)
+return;
+int modified=0,valid;
+char t_name[30], t_address[60];
+gotoxy(5,15);
+cout&lt;&lt;&quot;NAME :&quot;;
+gotoxy(5,16);
+cout&lt;&lt;&quot;ADDRESS :&quot;;
+do
+{
+a.clear(15,15);
+a.clear(5,23);
+gotoxy(5,23);
+cout&lt;&lt;&quot;ENTER NAME OR PRESS &lt;ENTER&gt; FOR NO CHANGE&quot;;
+valid=1;
+gotoxy(15,15);
+gets(t_name);
+strupr(t_name);
+if(t_name[0]==&#39;0&#39;)
+return;
+if(strlen(t_name)&gt;25)
+{
+valid=0;
+gotoxy(5,23);
+cprintf(&quot;\7NAME SHOULD NOT GREATER THAN 25&quot;);
+getch();
+}
+}while(!valid);
+if(strlen(t_name)&gt;0)
+modified=1;
+do
+{
+a.clear(15,16);
+a.clear(5,23);
+gotoxy(5,23);
+cout&lt; &lt;&quot;ENTER ADDRESS OR PRESS &lt;ENTER&gt; FOR NO CHANGE&quot;;
+valid=1;
+gotoxy(15,16);
+gets(t_address);
+strupr(t_address);
+if(t_address[0]==&#39;0&#39;)
+return;
+if(strlen(t_address)&gt;55)
+{
+valid=0;
+gotoxy(5,23);
+cprintf(&quot;\7SHOULD NOT BLANK OR GREATER THAN 55&quot;);
+
+getch();
+}
+}while(!valid);
+if(strlen(t_address)&gt;0)
+modified=1;
+if(!modified)
+return;
+a.clear(5,23);
+do
+{
+a.clear(5,18);
+gotoxy(5,18);
+cout&lt; &lt;&quot;DO YOU WANT TO SAVE CHANGES (Y/N):&quot;;
+ch=getche();
+if(ch==&#39;0&#39;)
+return;
+ch=toupper(ch);
+}while(ch!=&#39;N&#39; &amp;&amp; ch!=&#39;Y&#39;);
+if(ch==&#39;N&#39;)
+return;
+modify_account(t_accno,t_name,t_address);
+gotoxy(5,21);
+cout&lt;&lt;&quot;\7RECORD MODIFIED&quot;;
+gotoxy(5,23);
+cout&lt;&lt;&quot;PRESS ANY KEY TO CONTINUE...&quot;;
+getch();
+}
+
