@@ -368,9 +368,422 @@ int count=0;
 while (file.read((char*)this, sizeof(initial)))
 {
 count++;
-if(t_accno==accno)
+if(t_accno==accn
+o)
 break;
 }
 file.close();
 return count;
+}
+//===========================================================
+//THIS FUNTION DISPLAY THE ACCOUNT FOR GIVEN ACCOUNT NO.
+
+//FROM THE FILE INITIAL.DAT
+//===========================================================
+void initial::display(int t_accno)
+{
+shape s;
+s.box(8,7,73,11,219);
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::in);
+file.seekg(0,ios::beg);
+while(file.read((char*) this,sizeof(initial)))
+{
+if(t_accno==accno)
+{
+gotoxy(8,5);
+cout&lt; &lt;&quot;ACCOUNT NO. &quot;&lt;&lt;accno;
+gotoxy(10,8);
+cout&lt;&lt;&quot;NAME :&quot;&lt;&lt;name;
+gotoxy(10,9);
+cout&lt;&lt;&quot;ADDRERSS :&quot;&lt;&lt;address;
+gotoxy(10,10);
+cout&lt;&lt;&quot;BALANCE :&quot;&lt;&lt;balance;
+break;
+}
+}
+file.close();
+}
+//=============================================================
+//THIS FUNCTION RETURNS NAME FOR THE GIVEN ACCOUNT NO.
+//IN THE FILE INITIAL.DAT
+//=============================================================
+char *initial::return_name(int t_accno)
+{
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::in);
+file.seekg(0,ios::beg);
+char t_name[30];
+while(file.read((char *) this, sizeof(initial)))
+{
+if(accno==t_accno)
+{
+strcpy(t_name,name);
+break;
+}
+}
+file.close();
+return t_name;
+}
+//=========================================================
+//THIS FUNCTION RETURNS ADDRESS FOR THE GIVEN ACCOUNT NO.
+//IN THE FILE INITIAL.DAT
+//=========================================================
+char *initial::return_address(int t_accno)
+
+{
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::in);
+file.seekg(0,ios::beg);
+char t_address[60];
+while(file.read((char *)this, sizeof(initial)))
+{
+if(accno==t_accno)
+{
+strcpy(t_address,address);
+break;
+}
+}
+file.close();
+return t_address;
+}
+//============================================================
+//THIS FUNCTION RETURN BALANCE FOR THE GIVEN ACCOUNT NO.
+//IN THE FILE INITIAL.DAT
+//============================================================
+float initial::give_balance(int t_accno)
+{
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::in);
+file.seekg(0,ios::beg);
+float t_balance;
+while(file.read((char *)this, sizeof(initial)))
+{
+if(accno==t_accno)
+{
+t_balance=balance;
+break;
+}
+}
+file.close();
+return t_balance;
+}
+//==========================================================
+//THIS FUNCTION RETURN 1 IF THE GIVEN ACCOUNT NO. FOUND
+//IN THE FILE INITIAL.DAT
+//==========================================================
+int initial::found_account(int t_accno)
+{
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::in);
+file.seekg(0,ios::beg);
+int found=0;
+while(file.read((char *)this, sizeof(initial)))
+{
+if (accno==t_accno)
+{
+found=1;
+
+break;
+}
+}
+file.close();
+return found;
+}
+//===========================================================
+// THIS FUNCTION DRAWS THE BOX FOR THE LIST OF ACCOUNTS
+//===========================================================
+void initial::box_for_list()
+{
+shape s;
+s.box(2,1,79,25,218);
+s.line_hor(3,78,3,196);
+s.line_hor(3,78,5,196);
+s.line_hor(3,78,23,196);
+textbackground(BLACK);
+gotoxy(3,4);
+for(int i=1;i&lt;=76;i++)
+cprintf(&quot; &quot;);
+textbackground(BLACK);
+textcolor(LIGHTBLUE);
+textbackground(BLACK);
+gotoxy(4,4);
+cprintf(&quot;ACCOUNT NO. NAME OF PERSON BALANCE&quot;);
+textcolor(LIGHTBLUE);
+textbackground(BLACK);
+int d1,m1,y1;
+struct date d;
+getdate(&amp;d);
+d1=d.da_day;
+m1=d.da_mon;
+y1=d.da_year;
+gotoxy(4,2);
+cout&lt;&lt;&quot;DATE: &quot;&lt;&lt;d1&lt;&lt;&quot;/&quot;&lt;&lt;m1&lt;&lt;&quot;/&quot;&lt;&lt;y1;
+}
+//===========================================================
+//THIS FUNCTION DISPLAYS THE LIST OF ACCOUNTS IN FILE
+//INITIAL.DAT
+//===========================================================
+void initial::display_list(void)
+{
+clrscr();
+box_for_list();
+int row=6,flag;
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;, ios::in);
+while (file.read((char *)this, sizeof(initial)))
+{
+flag=0;
+delay(10);
+gotoxy(7,row);
+cout&lt;&lt;accno;
+
+gotoxy(25,row);
+cout&lt;&lt;name;
+gotoxy(57,row);
+cout&lt;&lt;balance;
+row++;
+if(row==23)
+{
+flag=1;
+row=6;
+gotoxy(4,24);
+cout&lt;&lt;&quot;PRESS ANY KEY TO CONTINUE...&quot;;
+getch();
+clrscr();
+box_for_list();
+}
+}
+file.close();
+(!flag);
+{
+gotoxy(4,24);
+cout&lt;&lt;&quot;PRESS ANY KEY TO CONTINUE...&quot;;
+getch();
+}
+}
+//================================================================
+//THIS FUNCTION ADDS THE GIVEN DATA INTO THE FILE
+//INITIAL.DAT
+//================================================================
+void initial::add_to_file(int t_accno,char t_name[30],char
+t_address[60], float t_balance)
+{
+accno=t_accno;
+strcpy(name,t_name);
+strcpy(address,t_address);
+balance=t_balance;
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::out | ios::app);
+file.write((char *) this, sizeof(initial));
+file.close();
+}
+//===============================================================
+//THIS FUNCTION DELETES RECORD FOR THE GIVEN ACCOUNT NO.
+//FROM THE FILE INITIAL.DAT
+//================================================================
+void initial::delete_account(int t_accno)
+{
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::in);
+fstream temp;
+temp.open(&quot;temp.dat&quot;,ios::out);
+file.seekg(0,ios::beg);
+while(!file.eof())
+{
+
+file.read((char*)this,sizeof(initial));
+if(file.eof())
+break;
+if(accno!=t_accno)
+temp.write((char*)this,sizeof(initial));
+}
+file.close();
+temp.close();
+file.open(&quot;INITIAL.DAT&quot;,ios::out);
+temp.open(&quot;temp.dat&quot;, ios::in);
+temp.seekg(0,ios::beg);
+while(!temp.eof() )
+{
+temp.read((char*)this,sizeof(initial));
+if(temp.eof())
+break;
+file.write((char*)this,sizeof(initial));
+}
+file.close();
+temp.close();
+}
+//================================================================
+//THIS FUNCTION UPDATE BALANCE FOR THE GIVEN ACCOUNT NO.
+//IN THE FILE INITIAL.DAT
+//================================================================
+void initial :: update_balance(int t_accno, float t_balance)
+{
+int recno;
+recno=recordno(t_accno);
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::out | ios::ate);
+balance=t_balance;
+int location;
+location=(recno-1) * sizeof(initial);
+file.seekp(location);
+file.write((char *)this, sizeof(initial));
+file.close();
+}
+//===============================================================
+//THIS FUNCTION MODIFYS THE RECORD FOR THE GIVEN DATA
+//IN THE FILE INITIAL.DAT
+//===============================================================
+void initial::modify_account(int t_accno,char t_name[30],char
+t_address[60])
+{
+int recno;
+recno=recordno(t_accno);
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;, ios::out | ios::ate);
+strcpy(name, t_name);
+strcpy(address,t_address);
+int location;
+location=(recno-1) * sizeof(initial);
+
+file.seekp(location);
+file.write((char *) this, sizeof(initial));
+file.close();
+}
+//============================================================
+//THIS FUNCTION GIVE THE DATA TO MODIFY THE RECORD IN THE
+//FILE INITIAL.DAT
+//============================================================
+void initial::modify(void)
+{
+clrscr();
+char t_acc[10];
+int t, t_accno;
+gotoxy(71,1);
+cout&lt;&lt;&quot;&amp;lt;0&gt;=EXIT&quot;;
+gotoxy(5,5);
+cout&lt; &lt;&quot;ENTER THE ACCOUNT NO.&quot;;
+gets(t_acc);
+t=atoi(t_acc);
+t_accno=t;
+if(t_accno==0)
+return;
+clrscr();
+if(!found_account(t_accno))
+{
+gotoxy(5,5);
+cout&lt;&lt;&quot;\7ACCOUNT NOT FOUND&quot;;
+getch();
+return;
+}
+shape s;
+s.box(2,2,79,24,218);
+s.line_hor(3,78,4,196);
+s.line_hor(3,78,22,196);
+gotoxy(71,1);
+cout&lt;&lt;&quot;&amp;lt;0&gt;=EXIT&quot;;
+textbackground(BLACK);
+gotoxy(3,3);
+for(int i=1;i&lt; =76;i++) cprintf(&quot; &quot;);
+textbackground(BLACK);
+textcolor(LIGHTBLUE+BLINK); textbackground(BLACK);
+gotoxy(30,3);
+cprintf(&quot;MODIFY ACCOUNT SCREEN&quot;);
+textcolor(LIGHTBLUE); textbackground(BLACK);
+int d1,m1,y1;
+struct date d;
+getdate(&amp;d);
+d1=d.da_day;
+m1=d.da_mon;
+y1=d.da_year;
+gotoxy(62,5);
+cout&lt;&lt;&quot;DATE:&quot;&lt;&lt;d1&lt;&lt;&quot;/&quot;&lt;&lt;m1&lt;&lt;&quot;/&quot;&lt;&lt;y1;
+char ch;
+display(t_accno);
+account a;
+
+do
+{
+a.clear(5,13);
+gotoxy(5,13);
+cout&lt;&lt;&quot;MODIFY THIS ACCOUNT(Y/N):&quot;;
+ch=getche();
+if(ch==&#39;0&#39;)
+return;
+ch=toupper(ch);
+}while(ch!=&#39;N&#39; &amp;&amp; ch!=&#39;Y&#39;);
+if(ch==&#39;N&#39;)
+return;
+int modified=0,valid;
+char t_name[30], t_address[60];
+gotoxy(5,15);
+cout&lt;&lt;&quot;NAME :&quot;;
+gotoxy(5,16);
+cout&lt;&lt;&quot;ADDRESS :&quot;;
+do
+{
+a.clear(15,15);
+a.clear(5,23);
+gotoxy(5,23);
+cout&lt;&lt;&quot;ENTER NAME OR PRESS &lt;ENTER&gt; FOR NO CHANGE&quot;;
+valid=1;
+gotoxy(15,15);
+gets(t_name);
+strupr(t_name);
+if(t_name[0]==&#39;0&#39;)
+return;
+if(strlen(t_name)&gt;25)
+{
+valid=0;
+gotoxy(5,23);
+cprintf(&quot;\7NAME SHOULD NOT GREATER THAN 25&quot;);
+getch();
+}
+}while(!valid);
+if(strlen(t_name)&gt;0)
+modified=1;
+do
+{
+a.clear(15,16);
+a.clear(5,23);
+gotoxy(5,23);
+cout&lt; &lt;&quot;ENTER ADDRESS OR PRESS &lt;ENTER&gt; FOR NO CHANGE&quot;;
+valid=1;
+gotoxy(15,16);
+gets(t_address);
+strupr(t_address);
+if(t_address[0]==&#39;0&#39;)
+return;
+if(strlen(t_address)&gt;55)
+{
+valid=0;
+gotoxy(5,23);
+cprintf(&quot;\7SHOULD NOT BLANK OR GREATER THAN 55&quot;);
+
+getch();
+}
+}while(!valid);
+if(strlen(t_address)&gt;0)
+modified=1;
+if(!modified)
+return;
+a.clear(5,23);
+do
+{
+a.clear(5,18);
+gotoxy(5,18);
+cout&lt; &lt;&quot;DO YOU WANT TO SAVE CHANGES (Y/N):&quot;;
+ch=getche();
+if(ch==&#39;0&#39;)
+return;
+ch=toupper(ch);
+}while(ch!=&#39;N&#39; &amp;&amp; ch!=&#39;Y&#39;);
+if(ch==&#39;N&#39;)
+return;
+modify_account(t_accno,t_name,t_address);
+gotoxy(5,21);
+cout&lt;&lt;&quot;\7RECORD MODIFIED&quot;;
+gotoxy(5,23);
+cout&lt;&lt;&quot;PRESS ANY KEY TO CONTINUE...&quot;;
+getch();
 }
