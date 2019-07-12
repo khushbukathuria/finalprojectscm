@@ -55,3 +55,51 @@ int accno;
 char name[30],address[60];
 float balance;
 };
+//===========================================================
+// THIS CLASS CONTAINS FUNCTIONS RELATED TO TRANSACTIONS
+//===========================================================
+class account
+{
+public :
+void new_account(void);
+void close_account(void);
+void display_account(void);
+void transaction(void);
+void clear(int,int);
+private :
+void add_to_file(int,int,int,int,char,char
+t_type[10],float,float,float);
+void delete_account(int);
+int no_of_days(int,int,int,int,int,int);
+float calculate_interest(int,float);
+void display(int);
+void box_for_display(int);
+int accno;
+char type[10]; //Cheque or Cash
+int dd,mm,yy; //Date
+char tran ; // Deposit or withdrawl
+float interest,amount,balance;
+};
+//===========================================================
+// FUNCTION TO DRAW HORIZONTAL LINE
+//===========================================================
+void shape::line_hor(int column1,int column2,int row,char c)
+{
+for(column1;column1&lt; =column2;column1++)
+{
+gotoxy(column1,row);
+cout&lt;&lt;c;
+}
+}
+//===========================================================
+// FUNCTION TO DRAW VERTICAL LINE
+//===========================================================
+void shape::line_ver(int row1,int row2,int column,char c)
+{
+for(row1;row1&lt;=row2;row1++)
+{
+gotoxy(column,row1);
+cout&lt;&lt;c;
+
+}
+}
