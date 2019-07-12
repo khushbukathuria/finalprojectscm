@@ -350,3 +350,4 @@ file.open(&quot;INITIAL.DAT&quot;,ios::out | ios::app);
 file.write((char *) this, sizeof(initial));
 file.close();
 }
+
