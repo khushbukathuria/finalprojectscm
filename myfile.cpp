@@ -262,3 +262,91 @@ break;
 file.close();
 return found;
 }
+//===========================================================
+// THIS FUNCTION DRAWS THE BOX FOR THE LIST OF ACCOUNTS
+//===========================================================
+void initial::box_for_list()
+{
+shape s;
+s.box(2,1,79,25,218);
+s.line_hor(3,78,3,196);
+s.line_hor(3,78,5,196);
+s.line_hor(3,78,23,196);
+textbackground(BLACK);
+gotoxy(3,4);
+for(int i=1;i&lt;=76;i++)
+cprintf(&quot; &quot;);
+textbackground(BLACK);
+textcolor(LIGHTBLUE);
+textbackground(BLACK);
+gotoxy(4,4);
+cprintf(&quot;ACCOUNT NO. NAME OF PERSON BALANCE&quot;);
+textcolor(LIGHTBLUE);
+textbackground(BLACK);
+int d1,m1,y1;
+struct date d;
+getdate(&amp;d);
+d1=d.da_day;
+m1=d.da_mon;
+y1=d.da_year;
+gotoxy(4,2);
+cout&lt;&lt;&quot;DATE: &quot;&lt;&lt;d1&lt;&lt;&quot;/&quot;&lt;&lt;m1&lt;&lt;&quot;/&quot;&lt;&lt;y1;
+}
+//===========================================================
+//THIS FUNCTION DISPLAYS THE LIST OF ACCOUNTS IN FILE
+//INITIAL.DAT
+//===========================================================
+void initial::display_list(void)
+{
+clrscr();
+box_for_list();
+int row=6,flag;
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;, ios::in);
+while (file.read((char *)this, sizeof(initial)))
+{
+flag=0;
+delay(10);
+gotoxy(7,row);
+cout&lt;&lt;accno;
+
+gotoxy(25,row);
+cout&lt;&lt;name;
+gotoxy(57,row);
+cout&lt;&lt;balance;
+row++;
+if(row==23)
+{
+flag=1;
+row=6;
+gotoxy(4,24);
+cout&lt;&lt;&quot;PRESS ANY KEY TO CONTINUE...&quot;;
+getch();
+clrscr();
+box_for_list();
+}
+}
+file.close();
+(!flag);
+{
+gotoxy(4,24);
+cout&lt;&lt;&quot;PRESS ANY KEY TO CONTINUE...&quot;;
+getch();
+}
+}
+//================================================================
+//THIS FUNCTION ADDS THE GIVEN DATA INTO THE FILE
+//INITIAL.DAT
+//================================================================
+void initial::add_to_file(int t_accno,char t_name[30],char
+t_address[60], float t_balance)
+{
+accno=t_accno;
+strcpy(name,t_name);
+strcpy(address,t_address);
+balance=t_balance;
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::out | ios::app);
+file.write((char *) this, sizeof(initial));
+file.close();
+}
