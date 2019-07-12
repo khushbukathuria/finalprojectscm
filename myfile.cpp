@@ -147,3 +147,53 @@ row2--;
 line_ver(row1,row2,column1,l2);
 line_ver(row1,row2,column2,l2);
 }}
+//===========================================================
+//THIS FUNTION DISPLAY THE ACCOUNT FOR GIVEN ACCOUNT NO.
+
+//FROM THE FILE INITIAL.DAT
+//===========================================================
+void initial::display(int t_accno)
+{
+shape s;
+s.box(8,7,73,11,219);
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::in);
+file.seekg(0,ios::beg);
+while(file.read((char*) this,sizeof(initial)))
+{
+if(t_accno==accno)
+{
+gotoxy(8,5);
+cout&lt; &lt;&quot;ACCOUNT NO. &quot;&lt;&lt;accno;
+gotoxy(10,8);
+cout&lt;&lt;&quot;NAME :&quot;&lt;&lt;name;
+gotoxy(10,9);
+cout&lt;&lt;&quot;ADDRERSS :&quot;&lt;&lt;address;
+gotoxy(10,10);
+cout&lt;&lt;&quot;BALANCE :&quot;&lt;&lt;balance;
+break;
+}
+}
+file.close();
+}
+//=============================================================
+//THIS FUNCTION RETURNS NAME FOR THE GIVEN ACCOUNT NO.
+//IN THE FILE INITIAL.DAT
+//=============================================================
+char *initial::return_name(int t_accno)
+{
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::in);
+file.seekg(0,ios::beg);
+char t_name[30];
+while(file.read((char *) this, sizeof(initial)))
+{
+if(accno==t_accno)
+{
+strcpy(t_name,name);
+break;
+}
+}
+file.close();
+return t_name;
+}
