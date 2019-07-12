@@ -147,3 +147,133 @@ row2--;
 line_ver(row1,row2,column1,l2);
 line_ver(row1,row2,column2,l2);
 }}
+//============================================================
+// FUNCTION TO DISPLAY MAIN MENU AND CALL OTHER FUNCTIONS
+//============================================================
+void control::main_menu(void)
+{
+char ch;
+
+while (1)
+{
+clrscr();
+shape s;
+s.box(10,5,71,21,219);
+s.box(9,4,72,22,218);
+textcolor(LIGHTBLUE+BLINK);
+textbackground(BLACK);
+gotoxy(32,7);
+cprintf(&quot; B A N K I N G &quot;);
+gotoxy(35,9);
+cprintf(&quot; OPTIONS &quot;);
+textcolor(LIGHTBLUE);
+textbackground(BLACK);
+gotoxy(30,11);
+cout&lt;&lt;&quot;1: SEE ACCOUNT &quot;;
+gotoxy(30,12);
+cout&lt;&lt;&quot;2: LIST OF ACCOUNTS &quot;;
+gotoxy(30,13);
+cout&lt;&lt;&quot;3: TRANSACTIONS &quot;;
+gotoxy(30,14);
+cout&lt;&lt;&quot;4: OPEN NEW ACCOUNT &quot;;
+gotoxy(30,15);
+cout&lt;&lt;&quot;5: EDIT ACCOUNTS &quot;;
+gotoxy(30,16);
+cout&lt;&lt;&quot;6: HELP &quot;;
+gotoxy(30,17);
+cout&lt;&lt;&quot;0: QUIT &quot;;
+gotoxy(30,19);
+cout&lt;&lt;&quot; ENTER YOUR CHOICE:&quot;;
+ch=getche();
+if(ch==27)
+break;
+else
+if(ch==&#39;1&#39;)
+{
+account a;
+a.display_account();
+}
+else
+if(ch==&#39;2&#39;)
+{
+initial ini;
+ini.display_list();
+}
+else
+if(ch==&#39;3&#39;)
+{
+account a ;
+a.transaction();
+}
+else
+if(ch==&#39;4&#39;)
+{
+account a;
+a.new_account();
+}
+
+else
+if(ch==&#39;5&#39;)
+edit_menu();
+else
+if(ch==&#39;6&#39;)
+help();
+else
+if(ch==&#39;0&#39;)
+break;
+}
+for(int i=25;i&gt;=1;i--)
+{
+delay(20);
+gotoxy(1,i); clreol();
+}
+}
+//=============================================================
+// FUNCTION TO DISPLAY EDIT MENU AND CALL OTHER FUNCTION
+//=============================================================
+void control::edit_menu(void)
+{
+char ch;
+while (1)
+{
+clrscr();
+shape s;
+s.box(10,5,71,21,219);
+s.box(9,4,72,22,218);
+textcolor(LIGHTBLUE);
+textbackground(BLACK);
+gotoxy(34,10);
+cprintf(&quot; EDIT MENU&quot;);
+textcolor(LIGHTBLUE);
+textbackground(BLACK);
+gotoxy(31,12);
+cout&lt; &lt;&quot;1: MODIFY ACCOUNT :&quot;;
+gotoxy(31,13);
+cout&lt;&lt;&quot;2: CLOSE ACCOUNT &quot;;
+gotoxy(31,14);
+cout&lt;&lt;&quot;0: QUIT &quot;;
+gotoxy(31,16);
+cout&lt;&lt;&quot;ENTER YOUR CHOICE: &quot;;
+ch=getche();
+if(ch==27)
+break;
+else
+if(ch==&#39;1&#39;)
+{
+initial ini;
+ini.modify();
+break;
+}
+else
+if(ch==&#39;2&#39;)
+{
+
+account a;
+a.close_account();
+break;
+}
+else
+if(ch==&#39;0&#39;)
+break;
+}
+}
