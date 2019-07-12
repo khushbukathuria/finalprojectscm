@@ -350,4 +350,75 @@ file.open(&quot;INITIAL.DAT&quot;,ios::out | ios::app);
 file.write((char *) this, sizeof(initial));
 file.close();
 }
+//===============================================================
+//THIS FUNCTION DELETES RECORD FOR THE GIVEN ACCOUNT NO.
+//FROM THE FILE INITIAL.DAT
+//================================================================
+void initial::delete_account(int t_accno)
+{
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::in);
+fstream temp;
+temp.open(&quot;temp.dat&quot;,ios::out);
+file.seekg(0,ios::beg);
+while(!file.eof())
+{
 
+file.read((char*)this,sizeof(initial));
+if(file.eof())
+break;
+if(accno!=t_accno)
+temp.write((char*)this,sizeof(initial));
+}
+file.close();
+temp.close();
+file.open(&quot;INITIAL.DAT&quot;,ios::out);
+temp.open(&quot;temp.dat&quot;, ios::in);
+temp.seekg(0,ios::beg);
+while(!temp.eof() )
+{
+temp.read((char*)this,sizeof(initial));
+if(temp.eof())
+break;
+file.write((char*)this,sizeof(initial));
+}
+file.close();
+temp.close();
+}
+//================================================================
+//THIS FUNCTION UPDATE BALANCE FOR THE GIVEN ACCOUNT NO.
+//IN THE FILE INITIAL.DAT
+//================================================================
+void initial :: update_balance(int t_accno, float t_balance)
+{
+int recno;
+recno=recordno(t_accno);
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::out | ios::ate);
+balance=t_balance;
+int location;
+location=(recno-1) * sizeof(initial);
+file.seekp(location);
+file.write((char *)this, sizeof(initial));
+file.close();
+}
+//===============================================================
+//THIS FUNCTION MODIFYS THE RECORD FOR THE GIVEN DATA
+//IN THE FILE INITIAL.DAT
+//===============================================================
+void initial::modify_account(int t_accno,char t_name[30],char
+t_address[60])
+{
+int recno;
+recno=recordno(t_accno);
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;, ios::out | ios::ate);
+strcpy(name, t_name);
+strcpy(address,t_address);
+int location;
+location=(recno-1) * sizeof(initial);
+
+file.seekp(location);
+file.write((char *) this, sizeof(initial));
+file.close();
+}
