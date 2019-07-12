@@ -197,3 +197,68 @@ break;
 file.close();
 return t_name;
 }
+//=========================================================
+//THIS FUNCTION RETURNS ADDRESS FOR THE GIVEN ACCOUNT NO.
+//IN THE FILE INITIAL.DAT
+//=========================================================
+char *initial::return_address(int t_accno)
+
+{
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::in);
+file.seekg(0,ios::beg);
+char t_address[60];
+while(file.read((char *)this, sizeof(initial)))
+{
+if(accno==t_accno)
+{
+strcpy(t_address,address);
+break;
+}
+}
+file.close();
+return t_address;
+}
+//============================================================
+//THIS FUNCTION RETURN BALANCE FOR THE GIVEN ACCOUNT NO.
+//IN THE FILE INITIAL.DAT
+//============================================================
+float initial::give_balance(int t_accno)
+{
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::in);
+file.seekg(0,ios::beg);
+float t_balance;
+while(file.read((char *)this, sizeof(initial)))
+{
+if(accno==t_accno)
+{
+t_balance=balance;
+break;
+}
+}
+file.close();
+return t_balance;
+}
+//==========================================================
+//THIS FUNCTION RETURN 1 IF THE GIVEN ACCOUNT NO. FOUND
+//IN THE FILE INITIAL.DAT
+//==========================================================
+int initial::found_account(int t_accno)
+{
+fstream file;
+file.open(&quot;INITIAL.DAT&quot;,ios::in);
+file.seekg(0,ios::beg);
+int found=0;
+while(file.read((char *)this, sizeof(initial)))
+{
+if (accno==t_accno)
+{
+found=1;
+
+break;
+}
+}
+file.close();
+return found;
+}
